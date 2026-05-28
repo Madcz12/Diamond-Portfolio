@@ -1,0 +1,230 @@
+/* ============================================
+   Miguel Diamond Portfolio — Dark Luxury Design System
+   ============================================ */
+
+:root {
+  /* Colors — Dark Luxury Palette */
+  --black: #000000;
+  --white: #ffffff;
+  --silver: #c0c0c0;
+  --light-gray: #e8e8e8;
+  --dark-gray: #1a1a1a;
+  --mid-gray: #666666;
+  --border-subtle: #111111;
+  --glow-white: rgba(255, 255, 255, 0.08);
+  --glow-strong: rgba(255, 255, 255, 0.15);
+
+  /* Typography */
+  --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --fw-light: 200;
+  --fw-bold: 700;
+
+  /* Layout */
+  --panel-width: 100vw;
+  --panel-height: 100vh;
+
+  /* Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-panel: 1.2s;
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    #121212 0%,
+    #000000 100%
+  );
+  color: var(--white);
+  font-family: var(--font-main);
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Hide default cursor on interactive elements */
+a, button, [role="button"], input, select, textarea {
+  cursor: none;
+}
+
+/* Custom Scrollbar — Hidden */
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--white);
+}
+
+/* ============================================
+   Panel System
+   ============================================ */
+
+.panels-container {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100vh;
+  will-change: transform;
+  position: relative;
+  z-index: 2;
+}
+
+.panel {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-inner {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 60px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   Section Labels & Titles
+   ============================================ */
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--silver);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: var(--fw-light);
+  line-height: 1.15;
+  margin-bottom: 48px;
+  color: var(--white);
+}
+
+/* ============================================
+   Reveal Animations
+   ============================================ */
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-up.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays via CSS custom property */
+.reveal-up:nth-child(1) { transition-delay: 0s; }
+.reveal-up:nth-child(2) { transition-delay: 0.12s; }
+.reveal-up:nth-child(3) { transition-delay: 0.24s; }
+.reveal-up:nth-child(4) { transition-delay: 0.36s; }
+.reveal-up:nth-child(5) { transition-delay: 0.48s; }
+.reveal-up:nth-child(6) { transition-delay: 0.60s; }
+.reveal-up:nth-child(7) { transition-delay: 0.72s; }
+.reveal-up:nth-child(8) { transition-delay: 0.84s; }
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+.text-silver {
+  color: var(--silver);
+}
+
+.text-muted {
+  color: var(--mid-gray);
+}
+
+.fw-light {
+  font-weight: var(--fw-light);
+}
+
+.fw-bold {
+  font-weight: var(--fw-bold);
+}
+
+/* ============================================
+   Diamond SVG Background
+   ============================================ */
+
+.diamond-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+.diamond-bg svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================
+   Responsive — Mobile adjustments
+   ============================================ */
+
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+
+  a, button, [role="button"], input, select, textarea {
+    cursor: auto;
+  }
+
+  .panel-inner {
+    padding: 0 24px;
+  }
+
+  .section-title {
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .panel-inner {
+    padding: 0 16px;
+  }
+}

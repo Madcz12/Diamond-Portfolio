@@ -1,0 +1,282 @@
+/* ============================================
+   About Section - 3-Column Luxury Dashboard
+   ============================================ */
+
+/* Inner Panel Constraints to Prevent Page Scroll */
+.about-panel-inner {
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 40px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Dashboard Container */
+.about-dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 45px;
+  width: 100%;
+  align-items: stretch;
+}
+
+/* Individual Column Layouts */
+.dashboard-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dashboard-col:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  padding-right: 45px;
+}
+
+.col-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.col-content p {
+  color: var(--mid-gray);
+  line-height: 1.7;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Column 1 Accentuated Value Proposition */
+.value-prop-accent {
+  margin-top: 12px;
+  border-left: 2px solid #ffd600;
+  padding-left: 18px;
+  font-style: italic;
+  font-size: 0.85rem !important;
+  line-height: 1.6;
+  color: var(--light-gray) !important;
+}
+
+/* Column 2 Migration Card Component */
+.migration-card {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.migration-title {
+  font-size: 0.65rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.15em;
+  color: var(--silver);
+  text-transform: uppercase;
+}
+
+.migration-card p {
+  font-size: 0.78rem !important;
+  color: var(--mid-gray);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.migration-arrow {
+  text-align: center;
+  color: #ffd600;
+  font-size: 1.1rem;
+  margin: 2px 0;
+  font-weight: bold;
+}
+
+.tech-migration-badge {
+  font-size: 0.72rem;
+  color: #ffd600;
+  background: rgba(255, 214, 0, 0.02);
+  border: 1px solid rgba(255, 214, 0, 0.08);
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-family: monospace;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ============================================
+   Column 3: Compact Experience Tree Timeline
+   ============================================ */
+.tree-timeline {
+  position: relative;
+  padding-left: 24px;
+  margin-top: 5px;
+}
+
+/* Slender Connected Path with Dynamic Gradient */
+.tree-line {
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, #00c853 0%, #ffd600 50%, #00c853 100%);
+  box-shadow: 0 0 6px rgba(0, 200, 83, 0.2), 0 0 10px rgba(255, 214, 0, 0.1);
+  z-index: 1;
+}
+
+.tree-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  padding-bottom: 18px;
+  gap: 15px;
+  z-index: 2;
+}
+
+.tree-item:last-child {
+  padding-bottom: 0;
+}
+
+/* Elegant Node Dots */
+.tree-dot {
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #000000;
+  z-index: 3;
+}
+
+.green-dot {
+  background: #00c853;
+  box-shadow: 0 0 8px rgba(0, 200, 83, 0.8), 0 0 0 3px rgba(0, 200, 83, 0.15);
+  animation: pulse-green 3s infinite alternate;
+}
+
+.white-dot {
+  background: #ffffff;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 6px rgba(0, 200, 83, 0.6), 0 0 0 0px rgba(0, 200, 83, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 12px rgba(0, 200, 83, 1), 0 0 0 4px rgba(0, 200, 83, 0);
+  }
+}
+
+/* Compact Content Column */
+.tree-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tree-content h4 {
+  font-size: 0.95rem;
+  font-weight: var(--fw-bold);
+  color: var(--white);
+  margin: 0;
+}
+
+.tree-content h5 {
+  font-size: 0.82rem;
+  font-weight: var(--fw-light);
+  color: var(--silver);
+  margin: 0;
+}
+
+.tree-desc {
+  font-size: 0.78rem !important;
+  color: var(--mid-gray) !important;
+  line-height: 1.4 !important;
+  margin-top: 2px !important;
+}
+
+/* Minimalist Semi-Transparent Period Caps */
+.tree-period-box {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 3px 8px;
+  border-radius: 5px;
+  text-align: center;
+  min-width: 75px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: var(--transition-smooth);
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+.tree-item:hover .tree-period-box {
+  border-color: rgba(255, 214, 0, 0.15);
+  background: rgba(255, 214, 0, 0.01);
+}
+
+.period-year {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: var(--fw-bold);
+  color: #ffd600;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================
+   Responsive Layout & Scaling
+   ============================================ */
+@media (max-width: 1200px) {
+  .about-dashboard {
+    gap: 30px;
+  }
+  .dashboard-col:not(:last-child) {
+    padding-right: 30px;
+  }
+  .about-panel-inner {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .about-panel-inner {
+    height: auto;
+    padding-top: 100px;
+    padding-bottom: 80px;
+    overflow-y: auto;
+  }
+
+  .about-dashboard {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .dashboard-col:not(:last-child) {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-right: 0;
+    padding-bottom: 40px;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-panel-inner {
+    padding: 0 16px;
+    padding-top: 80px;
+  }
+  .tree-period-box {
+    min-width: 65px;
+    padding: 2px 6px;
+  }
+  .period-year {
+    font-size: 0.7rem;
+  }
+}

@@ -1,30 +1,45 @@
+/* ============================================
+   Contact Section — Dark Luxury Contact Form
+   ============================================ */
+
 .contact-inner {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100vh; /* Using full height for layout */
-  padding-top: 120px; /* Offset for nav */
+  height: 100vh;
+  padding-top: 120px;
   padding-bottom: 60px;
 }
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.2fr;
   gap: 80px;
   flex-grow: 1;
   align-items: center;
 }
+
+/* ── Left Column ── */
 
 .contact-left {
   display: flex;
   flex-direction: column;
 }
 
+.contact-subtitle {
+  font-size: 1.05rem;
+  font-weight: var(--fw-light);
+  color: var(--silver);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 380px;
+}
+
 .availability {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .status-dot {
@@ -57,60 +72,251 @@
   color: var(--silver);
 }
 
+/* ── Social Links (below availability) ── */
+
+.contact-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.contact-social-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--silver);
+  font-size: 0.9rem;
+  font-weight: var(--fw-light);
+  transition: color 0.3s ease, padding-left 0.3s ease;
+  text-decoration: none;
+}
+
+button.contact-social-link {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  width: 100%;
+  text-align: left;
+  cursor: none;
+  font-family: inherit;
+}
+
+.contact-social-link:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.contact-social-link svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.contact-social-link:hover {
+  color: var(--white);
+  padding-left: 8px;
+}
+
+.contact-social-link:hover svg {
+  opacity: 1;
+}
+
+/* ── Right Column — Contact Form ── */
+
 .contact-right {
   display: flex;
   flex-direction: column;
 }
 
-.contact-link {
+.contact-form {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 30px 0;
-  border-bottom: 1px solid var(--border-subtle);
-  color: var(--white);
-  transition: all 0.3s ease;
+  flex-direction: column;
+  gap: 0;
 }
 
-.contact-link:first-child {
-  border-top: 1px solid var(--border-subtle);
+.form-group {
+  position: relative;
 }
 
-.link-content {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
+/* ── Input & Textarea Shared ── */
 
-.link-content span {
-  font-size: 1.1rem;
+.form-input,
+.form-textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px 0 14px;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
   font-weight: var(--fw-light);
-}
-
-.link-content svg {
-  color: var(--silver);
-  transition: color 0.3s ease;
-}
-
-.arrow-icon {
-  color: var(--silver);
-  transition: transform 0.3s ease;
-}
-
-.contact-link:hover {
-  padding-left: 16px;
-  padding-right: 16px;
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-.contact-link:hover .link-content svg {
   color: var(--white);
+  outline: none;
+  transition: border-color 0.4s ease;
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 
-.contact-link:hover .arrow-icon {
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: transparent;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-bottom-color: rgba(255, 255, 255, 0.4);
+}
+
+.form-input:focus ~ .form-highlight,
+.form-textarea:focus ~ .form-highlight {
+  width: 100%;
+}
+
+/* ── Floating Label ── */
+
+.form-label {
+  position: absolute;
+  left: 0;
+  top: 24px;
+  font-size: 0.95rem;
+  font-weight: var(--fw-light);
+  color: var(--mid-gray);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label,
+.form-textarea:focus ~ .form-label,
+.form-textarea:not(:placeholder-shown) ~ .form-label {
+  top: 4px;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+
+/* ── Bottom line highlight ── */
+
+.form-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.1));
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Textarea specific ── */
+
+.form-textarea {
+  resize: none;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+/* ── Submit Button ── */
+
+.form-submit-wrapper {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.form-submit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 40px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--white);
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: none;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: var(--white);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+
+.form-submit span,
+.form-submit svg {
+  position: relative;
+  z-index: 1;
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.form-submit:hover {
+  border-color: var(--white);
+}
+
+.form-submit:hover::before {
+  width: 100%;
+}
+
+.form-submit:hover span,
+.form-submit:hover svg {
+  color: var(--black);
+}
+
+.form-submit:hover svg {
   transform: translateX(4px);
-  color: var(--white);
 }
+
+.form-submit:active {
+  transform: scale(0.97);
+}
+
+.form-submit:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ── Submit Success/Error Feedback ── */
+
+.form-status {
+  font-size: 0.8rem;
+  font-weight: var(--fw-light);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.4s ease;
+}
+
+.form-status.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form-status.success {
+  color: #22c55e;
+}
+
+.form-status.error {
+  color: #ef4444;
+}
+
+/* ── Footer ── */
 
 .contact-footer {
   display: flex;
@@ -122,10 +328,18 @@
   padding-top: 40px;
 }
 
+/* ============================================
+   Responsive
+   ============================================ */
+
 @media (max-width: 992px) {
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 60px;
+    gap: 48px;
+  }
+
+  .contact-subtitle {
+    max-width: 100%;
   }
 }
 
@@ -133,19 +347,24 @@
   .contact-inner {
     padding-top: 80px;
   }
-  
-  .contact-link {
-    padding: 24px 0;
+
+  .form-submit {
+    width: 100%;
+    justify-content: center;
   }
-  
-  .contact-link:hover {
-    padding-left: 0;
-    padding-right: 0;
+
+  .form-submit-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
+
   .contact-footer {
     flex-direction: column;
     gap: 12px;
     align-items: flex-start;
+  }
+
+  .contact-social-link:hover {
+    padding-left: 0;
   }
 }

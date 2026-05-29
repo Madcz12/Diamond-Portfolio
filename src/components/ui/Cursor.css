@@ -4,11 +4,12 @@
   left: 0;
   width: 8px;
   height: 8px;
-  background-color: var(--white);
+  background-color: #ffffff;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: difference;
+  will-change: transform;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
 }
 
 .custom-cursor-ring {
@@ -17,9 +18,10 @@
   left: 0;
   width: 32px;
   height: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
-  mix-blend-mode: difference;
+  will-change: transform;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2), inset 0 0 4px rgba(255, 255, 255, 0.1);
 }

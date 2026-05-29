@@ -53,7 +53,7 @@ export const Hero: React.FC<HeroProps> = ({ isActive, onExplore }) => {
           animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.8, delay: 1.0, ease: 'easeOut' }}
         >
-          Explorar facetas
+          Explorar
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>

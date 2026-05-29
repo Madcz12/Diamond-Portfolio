@@ -113,11 +113,12 @@ export function usePanelNavigation(): UsePanelNavigationReturn {
       const deltaX = touchStartRef.current.x - touch.clientX;
       const deltaY = touchStartRef.current.y - touch.clientY;
 
-      const delta = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
-      if (Math.abs(delta) < TOUCH_THRESHOLD) return;
-
-      if (delta > 0) goNext();
-      else goPrev();
+      // Only navigate on horizontal swipe to allow vertical scrolling on mobile
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (Math.abs(deltaX) < TOUCH_THRESHOLD) return;
+        if (deltaX > 0) goNext();
+        else goPrev();
+      }
     };
 
     window.addEventListener('touchstart', handleTouchStart, { passive: true });

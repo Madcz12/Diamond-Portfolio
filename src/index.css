@@ -238,6 +238,21 @@ body {
     background: rgba(12, 12, 12, 0.92) !important;
     border-color: rgba(255, 255, 255, 0.08) !important;
   }
+
+  /* Enable vertical scroll inside panels when content exceeds screen height */
+  .panel:not(.hero-panel) {
+    display: block !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .panel:not(.hero-panel) .panel-inner {
+    padding: 80px 24px 80px !important;
+    min-height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
 }
 
 @media (max-width: 480px) {

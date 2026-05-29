@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect } from 'react';
+import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import * as THREE from 'three';
@@ -209,9 +209,10 @@ function GroundReflection() {
 interface DiamondMeshProps {
   isHeroActive: boolean;
   targetRotationY: number;
+  isMobile: boolean;
 }
 
-function DiamondMesh({ isHeroActive, targetRotationY }: DiamondMeshProps) {
+function DiamondMesh({ isHeroActive, targetRotationY, isMobile }: DiamondMeshProps) {
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   // Track whether we were active on the previous frame to detect transitions
@@ -254,17 +255,17 @@ function DiamondMesh({ isHeroActive, targetRotationY }: DiamondMeshProps) {
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
       {/* Upright diamond — no tilt */}
-      <group rotation={[0, 0, 0]} scale={2.0}>
-        <mesh ref={meshRef} geometry={geometry} castShadow>
+      <group rotation={[0, 0, 0]} scale={isMobile ? 1.35 : 2.0}>
+        <mesh ref={meshRef} geometry={geometry} castShadow={!isMobile}>
           <meshPhysicalMaterial
-            color="#1a1a1a"
-            metalness={0.15}
-            roughness={0.05}
-            transmission={0.6}
-            thickness={2.5}
-            ior={2.42}
-            envMapIntensity={2.0}
-            clearcoat={1.0}
+            color={isMobile ? '#222222' : '#1a1a1a'}
+            metalness={isMobile ? 0.9 : 0.15}
+            roughness={isMobile ? 0.02 : 0.05}
+            transmission={isMobile ? 0 : 0.6}
+            thickness={isMobile ? 0 : 2.5}
+            ior={isMobile ? 1.5 : 2.42}
+            envMapIntensity={isMobile ? 1.0 : 2.0}
+            clearcoat={isMobile ? 0.5 : 1.0}
             clearcoatRoughness={0.03}
             reflectivity={1.0}
             attenuationColor={new THREE.Color('#333333')}
@@ -272,7 +273,7 @@ function DiamondMesh({ isHeroActive, targetRotationY }: DiamondMeshProps) {
             specularIntensity={1.0}
             specularColor={new THREE.Color('#ffffff')}
             transparent
-            opacity={0.95}
+            opacity={isMobile ? 0.7 : 0.95}
             side={THREE.DoubleSide}
           />
         </mesh>
@@ -317,6 +318,30 @@ interface DiamondCanvasProps {
 
 const DiamondCanvas: React.FC<DiamondCanvasProps> = ({ currentPanel, isHeroActive }) => {
   const targetRotationY = currentPanel * (Math.PI / 3);
+  const [isMobile, setIsMobile] = useState(false);
+  const [shouldRender, setShouldRender] = useState(isHeroActive);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        window.innerWidth < 768 || 
+        /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)
+      );
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isHeroActive) {
+      setShouldRender(true);
+    } else {
+      // Delay turning off the frameloop to allow the 0.8s CSS fade out to complete smoothly
+      const timer = setTimeout(() => setShouldRender(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isHeroActive]);
 
   return (
     <div
@@ -334,16 +359,18 @@ const DiamondCanvas: React.FC<DiamondCanvasProps> = ({ currentPanel, isHeroActiv
       }}
     >
       <Canvas
-        shadows
+        shadows={!isMobile}
         camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{
-          antialias: true,
+          antialias: !isMobile,
           alpha: true,
           powerPreference: 'high-performance',
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.2,
+          precision: isMobile ? 'mediump' : 'highp',
         }}
         style={{ background: 'transparent' }}
+        frameloop={shouldRender ? 'always' : 'never'}
       >
         <SceneSetup />
 
@@ -357,9 +384,9 @@ const DiamondCanvas: React.FC<DiamondCanvasProps> = ({ currentPanel, isHeroActiv
           penumbra={0.7}
           intensity={5}
           color="#ffffff"
-          castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
+          castShadow={!isMobile}
+          shadow-mapSize-width={isMobile ? 256 : 1024}
+          shadow-mapSize-height={isMobile ? 256 : 1024}
         />
 
         {/* Fill light — right side, softer */}
@@ -377,14 +404,15 @@ const DiamondCanvas: React.FC<DiamondCanvasProps> = ({ currentPanel, isHeroActiv
         <DiamondMesh
           isHeroActive={isHeroActive}
           targetRotationY={targetRotationY}
+          isMobile={isMobile}
         />
 
-        <LensFlare />
-        <GroundReflection />
+        {!isMobile && <LensFlare />}
+        {!isMobile && <GroundReflection />}
 
         {/* Environment for reflections on the facets */}
         <React.Suspense fallback={null}>
-          <Environment resolution={256}>
+          <Environment resolution={isMobile ? 64 : 256}>
             <ambientLight intensity={0.4} />
             {/* Bright reflection sources */}
             <mesh position={[5, 5, 5]}>

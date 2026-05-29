@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { DiamondBackground } from '../ui/DiamondBackground';
-import * as pdfjsLib from 'pdfjs-dist';
+// pdfjs-dist import removed to improve bundle size and loading speed
 import './Certifications.css';
 
-// Configure the PDF.js worker using highly compatible CDN
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+// pdfjs-dist worker initialization removed
 
 interface CertificationsProps {
   isActive: boolean;
@@ -18,51 +17,21 @@ interface CertData {
   image: string;
 }
 
-/* ─── PDF Thumbnail sub-component ─── */
-const PdfThumbnail: React.FC<{
-  pdfUrl: string;
-}> = ({ pdfUrl }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+/* ─── Certificate Thumbnail sub-component ─── */
+const CertThumbnail: React.FC<{
+  imageUrl: string;
+  alt: string;
+}> = ({ imageUrl, alt }) => {
   const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const render = async () => {
-      try {
-        const absoluteUrl = new URL(pdfUrl, window.location.origin).href;
-        const pdf = await pdfjsLib.getDocument(absoluteUrl).promise;
-        const page = await pdf.getPage(1);
-
-        if (cancelled || !canvasRef.current) return;
-
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        const desiredWidth = 400;
-        const unscaledViewport = page.getViewport({ scale: 1 });
-        const scale = desiredWidth / unscaledViewport.width;
-        const viewport = page.getViewport({ scale });
-
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-
-        await page.render({ canvasContext: ctx, canvas, viewport }).promise;
-
-        if (!cancelled) setLoaded(true);
-      } catch (err) {
-        console.error('Error rendering PDF thumbnail:', err);
-      }
-    };
-
-    render();
-    return () => { cancelled = true; };
-  }, [pdfUrl]);
 
   return (
     <div className={`cert-thumbnail ${loaded ? 'loaded' : ''}`}>
-      <canvas ref={canvasRef} className="cert-canvas" />
+      <img 
+        src={imageUrl} 
+        alt={alt} 
+        className="cert-canvas" 
+        onLoad={() => setLoaded(true)} 
+      />
       {!loaded && (
         <div className="cert-loading">
           <div className="cert-loading-spinner" />
@@ -175,7 +144,7 @@ export const Certifications: React.FC<CertificationsProps> = ({ isActive }) => {
         <div className={`certs-grid ${revealClass}`}>
           {certs.map((cert, index) => (
             <div className="cert-card" key={index} onClick={() => openLightbox(cert)} role="button" tabIndex={isActive ? 0 : -1} onKeyDown={(e) => { if (isActive && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openLightbox(cert); } }}>
-              <PdfThumbnail pdfUrl={cert.file} />
+              <CertThumbnail imageUrl={cert.image} alt={cert.name} />
               <div className="cert-info">
                 <h4 className="cert-name">{cert.name}</h4>
                 <div className="cert-meta">

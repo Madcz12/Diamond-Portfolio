@@ -174,7 +174,7 @@ export const Tech: React.FC<TechProps> = ({ isActive }) => {
 
           {/* Column 3: DevOps & Herramientas */}
           <div className="tech-stack-column">
-            <h4 className="tech-stack-header">Cloud & Tools</h4>
+            <h4 className="tech-stack-header">Herramientas</h4>
             <div className="tech-grid">
               
               {/* AWS */}

@@ -214,6 +214,11 @@ interface DiamondMeshProps {
 function DiamondMesh({ isHeroActive, targetRotationY }: DiamondMeshProps) {
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
+  // Track whether we were active on the previous frame to detect transitions
+  const wasActiveRef = useRef(isHeroActive);
+  // Store the clock time when the hero was last activated, so the float
+  // animation always starts from a coherent phase (avoids jump on re-entry)
+  const activationTimeRef = useRef(0);
 
   const geometry = useMemo(
     () => createBrilliantCutGeometry(1.0, 1.08, 1.2, 0.38, 0.52, 16),
@@ -224,9 +229,18 @@ function DiamondMesh({ isHeroActive, targetRotationY }: DiamondMeshProps) {
     if (!groupRef.current || !meshRef.current) return;
     const group = groupRef.current;
 
-    if (isHeroActive) {
-      group.position.y = Math.sin(state.clock.elapsedTime * 0.6) * 0.1;
+    // Detect activation edge: just became active
+    if (isHeroActive && !wasActiveRef.current) {
+      activationTimeRef.current = state.clock.elapsedTime;
     }
+    wasActiveRef.current = isHeroActive;
+
+    // Only animate when the hero section is active
+    if (!isHeroActive) return;
+
+    // Use time relative to activation so the float always starts from 0
+    const relativeTime = state.clock.elapsedTime - activationTimeRef.current;
+    group.position.y = Math.sin(relativeTime * 0.6) * 0.1;
 
     meshRef.current.rotation.y += delta * 0.1;
 

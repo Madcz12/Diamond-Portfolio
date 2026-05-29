@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { DiamondBackground } from '../ui/DiamondBackground';
 import * as pdfjsLib from 'pdfjs-dist';
 import './Certifications.css';
 
-// Configure the PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.mjs',
-  import.meta.url
-).toString();
+// Configure the PDF.js worker using highly compatible CDN
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
 
 interface CertificationsProps {
   isActive: boolean;
@@ -17,13 +15,13 @@ interface CertData {
   name: string;
   issuer: string;
   file: string;
+  image: string;
 }
 
 /* ─── PDF Thumbnail sub-component ─── */
 const PdfThumbnail: React.FC<{
   pdfUrl: string;
-  onClick: () => void;
-}> = ({ pdfUrl, onClick }) => {
+}> = ({ pdfUrl }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [loaded, setLoaded] = useState(false);
 
@@ -32,7 +30,8 @@ const PdfThumbnail: React.FC<{
 
     const render = async () => {
       try {
-        const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+        const absoluteUrl = new URL(pdfUrl, window.location.origin).href;
+        const pdf = await pdfjsLib.getDocument(absoluteUrl).promise;
         const page = await pdf.getPage(1);
 
         if (cancelled || !canvasRef.current) return;
@@ -41,8 +40,7 @@ const PdfThumbnail: React.FC<{
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        // Render at a resolution that fills the thumbnail box nicely
-        const desiredWidth = 400; // CSS pixels × 2 for retina
+        const desiredWidth = 400;
         const unscaledViewport = page.getViewport({ scale: 1 });
         const scale = desiredWidth / unscaledViewport.width;
         const viewport = page.getViewport({ scale });
@@ -63,35 +61,23 @@ const PdfThumbnail: React.FC<{
   }, [pdfUrl]);
 
   return (
-    <div className={`cert-thumbnail ${loaded ? 'loaded' : ''}`} onClick={onClick}>
+    <div className={`cert-thumbnail ${loaded ? 'loaded' : ''}`}>
       <canvas ref={canvasRef} className="cert-canvas" />
       {!loaded && (
         <div className="cert-loading">
           <div className="cert-loading-spinner" />
         </div>
       )}
-      <div className="cert-hover-overlay">
-        <span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            <line x1="11" y1="8" x2="11" y2="14" />
-            <line x1="8" y1="11" x2="14" y2="11" />
-          </svg>
-          Ver certificado
-        </span>
-      </div>
     </div>
   );
 };
 
 /* ─── Lightbox modal ─── */
 const CertLightbox: React.FC<{
-  pdfUrl: string | null;
+  imageUrl: string | null;
   certName: string;
   onClose: () => void;
-}> = ({ pdfUrl, certName, onClose }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+}> = ({ imageUrl, certName, onClose }) => {
   const [loading, setLoading] = useState(true);
 
   // Close on Escape
@@ -103,44 +89,7 @@ const CertLightbox: React.FC<{
     return () => window.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  // Render high-res PDF page
-  useEffect(() => {
-    if (!pdfUrl) return;
-    let cancelled = false;
-    setLoading(true);
-
-    const render = async () => {
-      try {
-        const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
-        const page = await pdf.getPage(1);
-
-        if (cancelled || !canvasRef.current) return;
-
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        // High-res render for the lightbox
-        const desiredWidth = 1200;
-        const unscaledViewport = page.getViewport({ scale: 1 });
-        const scale = desiredWidth / unscaledViewport.width;
-        const viewport = page.getViewport({ scale });
-
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-
-        await page.render({ canvasContext: ctx, canvas, viewport }).promise;
-        if (!cancelled) setLoading(false);
-      } catch (err) {
-        console.error('Error rendering PDF lightbox:', err);
-      }
-    };
-
-    render();
-    return () => { cancelled = true; };
-  }, [pdfUrl]);
-
-  if (!pdfUrl) return null;
+  if (!imageUrl) return null;
 
   return (
     <div className="cert-lightbox-overlay" onClick={onClose}>
@@ -158,9 +107,11 @@ const CertLightbox: React.FC<{
               <div className="cert-loading-spinner large" />
             </div>
           )}
-          <canvas
-            ref={canvasRef}
-            className={`cert-lightbox-canvas ${loading ? 'hidden' : ''}`}
+          <img
+            src={imageUrl}
+            alt={certName}
+            className={`cert-lightbox-image ${loading ? 'hidden' : ''}`}
+            onLoad={() => setLoading(false)}
           />
         </div>
       </div>
@@ -179,6 +130,7 @@ export const Certifications: React.FC<CertificationsProps> = ({ isActive }) => {
       return () => clearTimeout(timer);
     } else {
       setIsRevealed(false);
+      setLightbox(null); // close lightbox when leaving the panel
     }
   }, [isActive]);
 
@@ -186,24 +138,27 @@ export const Certifications: React.FC<CertificationsProps> = ({ isActive }) => {
 
   const certs: CertData[] = [
     {
-      name: 'NestJS',
-      issuer: 'Udemy',
-      file: '/cert-nest.pdf'
+      name: 'Certificado NestJS: Nest — Desarrollo de backend escalable con Node',
+      issuer: 'Dev/Talles',
+      file: '/cert-nest.pdf',
+      image: '/Nest.PNG'
     },
     {
-      name: 'React Pro',
-      issuer: 'Udemy',
-      file: '/cert-react-pro.pdf'
+      name: 'Certificado React PRO: React PRO, lleva tus bases al siguiente nivel',
+      issuer: 'Dev/Talles',
+      file: '/cert-react-pro.pdf',
+      image: '/ReactPRO.PNG'
     },
     {
-      name: 'React — De Cero a Experto',
-      issuer: 'Udemy',
-      file: '/cert-react-ceroexperto.pdf'
+      name: 'Certificado React: De Cero a Experto (Hooks y MERN)',
+      issuer: 'Dev/Talles',
+      file: '/cert-react-ceroexperto.pdf',
+      image: '/ReactBasico.PNG'
     }
   ];
 
   const openLightbox = useCallback((cert: CertData) => {
-    setLightbox({ url: cert.file, name: cert.name });
+    setLightbox({ url: cert.image, name: cert.name });
   }, []);
 
   const closeLightbox = useCallback(() => {
@@ -219,26 +174,38 @@ export const Certifications: React.FC<CertificationsProps> = ({ isActive }) => {
 
         <div className={`certs-grid ${revealClass}`}>
           {certs.map((cert, index) => (
-            <div className="cert-card" key={index}>
-              <PdfThumbnail
-                pdfUrl={cert.file}
-                onClick={() => openLightbox(cert)}
-              />
+            <div className="cert-card" key={index} onClick={() => openLightbox(cert)} role="button" tabIndex={isActive ? 0 : -1} onKeyDown={(e) => { if (isActive && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openLightbox(cert); } }}>
+              <PdfThumbnail pdfUrl={cert.file} />
               <div className="cert-info">
                 <h4 className="cert-name">{cert.name}</h4>
-                <span className="cert-issuer">{cert.issuer}</span>
+                <div className="cert-meta">
+                  <span className="cert-issuer">{cert.issuer}</span>
+                  <span className="cert-separator">·</span>
+                  <a
+                    href="#"
+                    className="cert-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      openLightbox(cert);
+                    }}
+                  >
+                    Ver certificado
+                  </a>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {lightbox && (
+      {isActive && lightbox && createPortal(
         <CertLightbox
-          pdfUrl={lightbox.url}
+          imageUrl={lightbox.url}
           certName={lightbox.name}
           onClose={closeLightbox}
-        />
+        />,
+        document.body
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DiamondBackground } from '../ui/DiamondBackground';
+import { CVModal } from '../ui/CVModal';
 import './About.css';
 
 interface AboutProps {
@@ -8,6 +9,7 @@ interface AboutProps {
 
 export const About: React.FC<AboutProps> = ({ isActive }) => {
   const [isRevealed, setIsRevealed] = useState(false);
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
 
   useEffect(() => {
     if (isActive) {
@@ -24,6 +26,7 @@ export const About: React.FC<AboutProps> = ({ isActive }) => {
   return (
     <div className="panel">
       <DiamondBackground variant={1} />
+      <CVModal isOpen={isCVModalOpen} onClose={() => setIsCVModalOpen(false)} />
       <div className="panel-inner about-panel-inner">
         <div className={`about-dashboard ${revealClass}`}>
           
@@ -42,6 +45,19 @@ export const About: React.FC<AboutProps> = ({ isActive }) => {
                 <strong>Propuesta de valor:</strong><br />
                 arquitectura de prompts, puente cliente-código, entregas consolidadas.
               </div>
+              <button
+                className="cv-download-btn"
+                id="open-cv-modal"
+                onClick={() => setIsCVModalOpen(true)}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="12" y1="18" x2="12" y2="12" />
+                  <polyline points="9 15 12 18 15 15" />
+                </svg>
+                Descargar CV
+              </button>
             </div>
           </div>
 

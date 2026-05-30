@@ -234,7 +234,8 @@ body {
   .cert-card, 
   .nav-container, 
   .proj-lightbox-content,
-  .cert-lightbox-content {
+  .cert-lightbox-content,
+  .cv-modal-content {
     background: rgba(12, 12, 12, 0.92) !important;
     border-color: rgba(255, 255, 255, 0.08) !important;
   }

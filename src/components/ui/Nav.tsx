@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Nav.css';
 
 interface NavProps {
@@ -7,17 +7,6 @@ interface NavProps {
 }
 
 export const Nav: React.FC<NavProps> = ({ currentPanel, onNavigate }) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    // Show nav from panel 1 onwards
-    if (currentPanel > 0) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  }, [currentPanel]);
-
   const navItems = [
     { label: 'Sobre mí', index: 1 },
     { label: 'Tecnologías', index: 2 },
@@ -27,7 +16,7 @@ export const Nav: React.FC<NavProps> = ({ currentPanel, onNavigate }) => {
   ];
 
   return (
-    <nav className={`global-nav ${isVisible ? 'visible' : ''}`}>
+    <nav className="global-nav visible">
       <div className="nav-logo" onClick={() => onNavigate(0)}>
         M · Diamond
       </div>

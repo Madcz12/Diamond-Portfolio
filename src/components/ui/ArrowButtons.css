@@ -3,38 +3,78 @@
   bottom: 30px;
   right: 30px;
   display: flex;
-  gap: 8px;
+  gap: 12px;
   z-index: 100;
+  transition: bottom 0.3s ease, right 0.3s ease;
+}
+
+.arrow-buttons-container.hero-active {
+  bottom: 40px;
+  right: 40px;
 }
 
 .arrow-btn {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
 .arrow-btn:not(.disabled):hover {
   border-color: rgba(255, 255, 255, 0.5);
-  transform: scale(1.05);
-  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.arrow-btn.large {
+  width: 62px;
+  height: 62px;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.arrow-btn.large:not(.disabled):hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-4px) scale(1.05);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.08), 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .arrow-btn.disabled {
-  opacity: 0.3;
+  opacity: 0.15;
   pointer-events: none;
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 @media (max-width: 768px) {
   .arrow-buttons-container {
-    bottom: 20px;
-    right: 20px;
+    bottom: 24px;
+    right: 24px;
+    gap: 8px;
+  }
+  
+  .arrow-buttons-container.hero-active {
+    bottom: 30px;
+    right: 30px;
+  }
+
+  .arrow-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .arrow-btn.large {
+    width: 52px;
+    height: 52px;
   }
 }

@@ -135,7 +135,7 @@ button.contact-social-link {
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 16px;
 }
 
 .form-group {
@@ -147,18 +147,17 @@ button.contact-social-link {
 .form-input,
 .form-textarea {
   width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 24px 0 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 28px 16px 12px;
   font-family: var(--font-main);
   font-size: 0.95rem;
   font-weight: var(--fw-light);
   color: var(--white);
   outline: none;
-  transition: border-color 0.4s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   -webkit-appearance: none;
-  border-radius: 0;
 }
 
 .form-input::placeholder,
@@ -166,9 +165,17 @@ button.contact-social-link {
   color: transparent;
 }
 
+.form-input:hover,
+.form-textarea:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 .form-input:focus,
 .form-textarea:focus {
-  border-bottom-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06), inset 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .form-input:focus ~ .form-highlight,
@@ -180,8 +187,8 @@ button.contact-social-link {
 
 .form-label {
   position: absolute;
-  left: 0;
-  top: 24px;
+  left: 16px;
+  top: 20px;
   font-size: 0.95rem;
   font-weight: var(--fw-light);
   color: var(--mid-gray);
@@ -193,8 +200,9 @@ button.contact-social-link {
 .form-input:not(:placeholder-shown) ~ .form-label,
 .form-textarea:focus ~ .form-label,
 .form-textarea:not(:placeholder-shown) ~ .form-label {
-  top: 4px;
-  font-size: 0.7rem;
+  top: 8px;
+  left: 16px;
+  font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--silver);
@@ -205,10 +213,12 @@ button.contact-social-link {
 .form-highlight {
   position: absolute;
   bottom: 0;
-  left: 0;
-  height: 1px;
+  left: 8px;
+  right: 8px;
+  height: 2px;
   width: 0;
-  background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.1));
+  background: linear-gradient(90deg, rgba(255,255,255,0.5), rgba(255,255,255,0.05));
+  border-radius: 1px;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

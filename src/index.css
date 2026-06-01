@@ -52,7 +52,6 @@ html, body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: none;
 }
 
 #root {
@@ -61,10 +60,6 @@ html, body {
   overflow: hidden;
 }
 
-/* Hide default cursor on interactive elements */
-a, button, [role="button"], input, select, textarea {
-  cursor: none;
-}
 
 /* Custom Scrollbar — Hidden */
 ::-webkit-scrollbar {

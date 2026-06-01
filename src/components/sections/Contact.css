@@ -99,7 +99,8 @@ button.contact-social-link {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   width: 100%;
   text-align: left;
-  cursor: none;
+  /* cursor: none; */
+  cursor: pointer;
   font-family: inherit;
 }
 
@@ -242,7 +243,8 @@ button.contact-social-link {
   font-weight: var(--fw-bold);
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  cursor: none;
+  /* cursor: none; */
+  cursor: pointer;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }

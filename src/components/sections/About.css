@@ -41,7 +41,7 @@
 .col-content p {
   color: var(--mid-gray);
   line-height: 1.7;
-  font-size: 0.9rem;
+  font-size: 1.0rem;
   margin: 0;
 }
 
@@ -51,7 +51,7 @@
   border-left: 2px solid #ffd600;
   padding-left: 18px;
   font-style: italic;
-  font-size: 0.85rem !important;
+  font-size: 0.95rem !important;
   line-height: 1.6;
   color: var(--light-gray) !important;
 }
@@ -68,7 +68,7 @@
   border-radius: 8px;
   color: #ffd600;
   font-family: var(--font-main);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: var(--fw-bold);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -77,6 +77,7 @@
     border-color 0.3s ease,
     box-shadow 0.3s ease,
     transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
 }
 
 .cv-download-btn:hover {
@@ -114,7 +115,7 @@
 }
 
 .migration-title {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: var(--fw-bold);
   letter-spacing: 0.15em;
   color: var(--silver);
@@ -122,7 +123,7 @@
 }
 
 .migration-card p {
-  font-size: 0.78rem !important;
+  font-size: 0.9rem !important;
   color: var(--mid-gray);
   line-height: 1.4;
   margin: 0;
@@ -137,7 +138,7 @@
 }
 
 .tech-migration-badge {
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   color: #ffd600;
   background: rgba(255, 214, 0, 0.02);
   border: 1px solid rgba(255, 214, 0, 0.08);
@@ -183,38 +184,7 @@
   padding-bottom: 0;
 }
 
-/* Elegant Node Dots */
-.tree-dot {
-  position: absolute;
-  left: 5px;
-  top: 8px;
-  transform: translate(-50%, -50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 2px solid #000000;
-  z-index: 3;
-}
 
-.green-dot {
-  background: #00c853;
-  box-shadow: 0 0 8px rgba(0, 200, 83, 0.8), 0 0 0 3px rgba(0, 200, 83, 0.15);
-  animation: pulse-green 3s infinite alternate;
-}
-
-.white-dot {
-  background: #ffffff;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
-}
-
-@keyframes pulse-green {
-  0% {
-    box-shadow: 0 0 6px rgba(0, 200, 83, 0.6), 0 0 0 0px rgba(0, 200, 83, 0.2);
-  }
-  100% {
-    box-shadow: 0 0 12px rgba(0, 200, 83, 1), 0 0 0 4px rgba(0, 200, 83, 0);
-  }
-}
 
 /* Compact Content Column */
 .tree-content {
@@ -225,21 +195,21 @@
 }
 
 .tree-content h4 {
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: var(--fw-bold);
   color: var(--white);
   margin: 0;
 }
 
 .tree-content h5 {
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   font-weight: var(--fw-light);
   color: var(--silver);
   margin: 0;
 }
 
 .tree-desc {
-  font-size: 0.78rem !important;
+  font-size: 0.9rem !important;
   color: var(--mid-gray) !important;
   line-height: 1.4 !important;
   margin-top: 2px !important;
@@ -269,7 +239,7 @@
 
 .period-year {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: var(--fw-bold);
   color: #ffd600;
   letter-spacing: 0.02em;

@@ -3,7 +3,6 @@ import { usePanelNavigation } from './hooks/usePanelNavigation';
 import DiamondCanvas from './components/DiamondCanvas';
 
 // Global UI
-import { Cursor } from './components/ui/Cursor';
 import { Nav } from './components/ui/Nav';
 import { FacetIndicator } from './components/ui/FacetIndicator';
 import { ProgressBar } from './components/ui/ProgressBar';
@@ -23,7 +22,6 @@ function App() {
 
   return (
     <>
-      <Cursor />
       <Nav currentPanel={currentPanel} onNavigate={setPanel} />
       <FacetIndicator currentPanel={currentPanel} onNavigate={setPanel} totalPanels={totalPanels} />
       <ProgressBar currentPanel={currentPanel} totalPanels={totalPanels} />

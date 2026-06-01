@@ -67,6 +67,7 @@
   justify-content: center;
   color: var(--mid-gray);
   transition: var(--transition-smooth);
+  cursor: pointer;
 }
 
 .cv-modal-close:hover {
@@ -135,6 +136,7 @@
     border-color 0.35s ease,
     transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.35s ease;
+  cursor: pointer;
 }
 
 .cv-card:hover {

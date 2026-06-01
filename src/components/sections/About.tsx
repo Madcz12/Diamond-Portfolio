@@ -89,7 +89,7 @@ export const About: React.FC<AboutProps> = ({ isActive }) => {
                 <div className="tree-line"></div>
                 
                 <div className="tree-item">
-                  <div className="tree-dot green-dot"></div>
+
                   <div className="tree-content">
                     <h4>BRIQCAR CA</h4>
                     <h5>Desarrollador Web</h5>
@@ -101,7 +101,7 @@ export const About: React.FC<AboutProps> = ({ isActive }) => {
                 </div>
 
                 <div className="tree-item">
-                  <div className="tree-dot white-dot"></div>
+
                   <div className="tree-content">
                     <h4>BRIQCAR CA</h4>
                     <h5>Desarrollador Web</h5>
@@ -113,7 +113,7 @@ export const About: React.FC<AboutProps> = ({ isActive }) => {
                 </div>
 
                 <div className="tree-item">
-                  <div className="tree-dot white-dot"></div>
+
                   <div className="tree-content">
                     <h4>CVG</h4>
                     <h5>Desarrollador de Sistemas</h5>
@@ -125,7 +125,7 @@ export const About: React.FC<AboutProps> = ({ isActive }) => {
                 </div>
 
                 <div className="tree-item">
-                  <div className="tree-dot green-dot"></div>
+
                   <div className="tree-content">
                     <h4>Nailed Nails</h4>
                     <h5>Desarrollador Full Stack</h5>

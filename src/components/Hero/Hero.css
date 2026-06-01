@@ -95,7 +95,8 @@
   text-transform: uppercase;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  cursor: none;
+  /* cursor: none; */
+  cursor: pointer;
 }
 
 .hero-btn:hover {

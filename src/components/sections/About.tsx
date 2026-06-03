@@ -35,7 +35,7 @@ export const About: React.FC<AboutProps> = ({ isActive }) => {
             <h3 className="section-label">01 · Sobre mí</h3>
             <div className="col-content animate-content">
               <p>Soy Ingeniero en Informática con 4 años de experiencia en el desarrollo de software.</p>
-              <p>Me especializo en el área frontend del desarrollo web, sin embargo cuento con sólidos conocimientos con tecnologías backend.</p>
+              <p>Me especializo en el área frontend del desarrollo web, sin embargo cuento también con sólidos conocimientos con tecnologías backend.</p>
               <p>
                 Trabajo en la intersección entre la ingeniería de producto, arquitectura de software técnica y
                 colaboración con herramientas de IA, y así atacar el problema del negocio hasta llegar a la

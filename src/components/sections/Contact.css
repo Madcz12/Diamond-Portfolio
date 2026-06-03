@@ -357,7 +357,11 @@ button.contact-social-link {
 
 @media (max-width: 768px) {
   .contact-inner {
+    height: auto !important;
+    min-height: 100vh;
+    justify-content: flex-start !important;
     padding-top: 80px;
+    padding-bottom: 40px;
   }
 
   .form-submit {
